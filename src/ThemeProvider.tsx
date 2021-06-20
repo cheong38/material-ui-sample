@@ -3,8 +3,19 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import React from 'react'
 import { TypographyOptions } from '@material-ui/core/styles/createTypography'
 import { PaletteOptions } from '@material-ui/core/styles/createPalette'
+import { BreakpointsOptions } from '@material-ui/core/styles/createBreakpoints'
 
 const NOTO_SANS_KR_FONT_FAMILY = ['\'Noto Sans CJK KR\'', 'sans-serif'].join(',')
+
+const breakpoints: BreakpointsOptions = {
+  values: {
+    xs: 0,
+    sm: 600,
+    md: 1280, // Customized.
+    lg: 1440, // Not used.
+    xl: 1920 // Not used.
+  }
+}
 
 interface VariantColor {
   900: string
@@ -170,6 +181,7 @@ const typography: TypographyOptions = {
 }
 
 const theme = createMuiTheme({
+  breakpoints,
   overrides: {
     MuiMenuItem: {
       root: {
@@ -215,6 +227,16 @@ const theme = createMuiTheme({
   },
   typography
 })
+
+// Responsive Typography goes here.
+theme.typography.h1 = {
+  '@media (min-width:600px)': {
+    fontSize: '1.5rem',
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '2.4rem',
+  },
+}
 
 const ThemeProvider: React.FC = ({ children }) => (
   <MuiThemeProvider theme={theme}>
